@@ -7,8 +7,6 @@ public class Main {
 
         System.out.println("Добро пожаловать в БухЯП v1.0");
         Scanner scanner = new Scanner(System.in);
-        boolean monthLoaded = false;
-        boolean yearLoaded = false;
         FileReader fileReader = new FileReader();
         int action=0;
         MonthlyReport monthlyReport = new MonthlyReport();
