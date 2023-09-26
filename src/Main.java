@@ -4,7 +4,7 @@ public class Main {
 
     public static void main(String[] args) {
         // Поехали!
-        String[] monthNames ={"Январь","Февраль","Март"};
+
         System.out.println("Добро пожаловать в БухЯП v1.0");
         Scanner scanner = new Scanner(System.in);
         boolean monthLoaded = false;
@@ -19,63 +19,19 @@ public class Main {
             printMenu();
             action=scanner.nextInt();
             if(action==1) {
-                if (monthLoaded) {
-                    System.out.println("Данные уже были загружены");
-                } else {
-                    for (int i = 1; i < 4; i++) {
-                        monthlyReport.listOfMonths.put(monthNames[i - 1], fileReader.readFileContents("m.20210" + i + ".csv"));
-                        monthlyReport.listOfMonths.get(monthNames[i-1]).remove(0);
-                    }
-                    monthLoaded = true;
-                    System.out.println("Считаны данные за 3 месяца");
-                }
+                monthlyReport.loadMonth(fileReader);
             }
             else if(action==2){
-                if (yearLoaded) {
-                    System.out.println("Данные уже были загружены");
-                } else {
-
-                    yearlyReport.listOfMonths=fileReader.readFileContents("y.2021.csv");
-                    yearlyReport.listOfMonths.remove(0);
-                    yearLoaded = true;
-                    System.out.println("Считаны данные за 2021 год");
-                }
+                yearlyReport.loadYear(fileReader);
             }
             else if(action==3){
-                if(yearLoaded&&monthLoaded)
-                {
-                    reportEngine.checkReports(monthlyReport,yearlyReport);
-                }
-                else if(!yearLoaded&&!monthLoaded)
-                {
-                    System.out.println("Сначала необходимо загрузить данные по годам и месяцам");
-
-                }
-                else if(!yearLoaded){
-                    System.out.println("Сначала необходимо загрузить данные за год");
-                }
-                else if(!monthLoaded){
-                    System.out.println("Сначала необходимо загрузить данные по месяцам");
-                }
-            }else if(action==4){
-                if(monthLoaded)
-                {
-                    reportEngine.reportMonth(monthlyReport);
-                }
-                else
-                {
-                    System.out.println("Сначала необходимо загрузить данные по месяцам");
-                }
+                reportEngine.checkReports(monthlyReport,yearlyReport);
+            }
+            else if(action==4){
+                reportEngine.reportMonth(monthlyReport);
             }
             else if(action==5){
-                if(yearLoaded)
-                {
-                    reportEngine.reportYear(yearlyReport);
-                }
-                else
-                {
-                    System.out.println("Сначала необходимо загрузить данные за год");
-                }
+                reportEngine.reportYear(yearlyReport);
             }
             else if(action==666){
                 System.out.println("БухЯП v1.0 завершает работу");
