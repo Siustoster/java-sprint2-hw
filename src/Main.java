@@ -22,8 +22,10 @@ public class Main {
                 if (monthLoaded) {
                     System.out.println("Данные уже были загружены");
                 } else {
-                    for (int i = 1; i < 4; i++)
-                        monthlyReport.listOfMonths.put(monthNames[i-1],fileReader.readFileContents("m.20210" + i + ".csv"));
+                    for (int i = 1; i < 4; i++) {
+                        monthlyReport.listOfMonths.put(monthNames[i - 1], fileReader.readFileContents("m.20210" + i + ".csv"));
+                        monthlyReport.listOfMonths.get(monthNames[i-1]).remove(0);
+                    }
                     monthLoaded = true;
                     System.out.println("Считаны данные за 3 месяца");
                 }
@@ -34,6 +36,7 @@ public class Main {
                 } else {
 
                     yearlyReport.listOfMonths=fileReader.readFileContents("y.2021.csv");
+                    yearlyReport.listOfMonths.remove(0);
                     yearLoaded = true;
                     System.out.println("Считаны данные за 2021 год");
                 }
@@ -41,7 +44,7 @@ public class Main {
             else if(action==3){
                 if(yearLoaded&&monthLoaded)
                 {
-
+                    reportEngine.checkReports(monthlyReport,yearlyReport);
                 }
                 else if(!yearLoaded&&!monthLoaded)
                 {
@@ -65,9 +68,16 @@ public class Main {
                 }
             }
             else if(action==5){
-
+                if(yearLoaded)
+                {
+                    reportEngine.reportYear(yearlyReport);
+                }
+                else
+                {
+                    System.out.println("Сначала необходимо загрузить данные за год");
+                }
             }
-            else if(action==6){
+            else if(action==666){
                 System.out.println("БухЯП v1.0 завершает работу");
                 return;
             }
